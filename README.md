@@ -1,5 +1,5 @@
 # static
-static (frontend) folder for gosumemory 
+static (frontend) folder for gosumemory / tosumemory
 
 # My overlay
 
