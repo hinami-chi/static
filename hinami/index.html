@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>overlay</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="sb">
+            <div id="sbBg">
+                <img src="skin/scorebar-bg.png" />
+            </div>
+            <div id="sbColor">
+                <img src="skin/scorebar-colour.png" />
+            </div>
+        </div>
+        <div id="score"></div>
+        <div id="acc"><div id="accdata">0</div><div></div></div>
+        <div id="timer"></div>
+        <div id="combo"><div id="combodata">0</div><div></div></div>
+        <div id="pp"><div id="ppCurent" class="odometer ppNum">0</div> --> <div id="ppIfFc" class="odometer ppNum">0</div> <div class="ppText">pp<div></div>
+        <div id="ur">
+            0
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+        <script src="deps/countUp.js"></script>
+        <script src="deps/reconnecting-websocket.min.js"></script>
+        <script src="index.js"></script>
+    </div>
+</body>
+
+</html>
