@@ -9,7 +9,12 @@
 </head>
 
 <body>
+    <div id="bgwparrer">
+        <img src="" id="bg">
+        <div id="bgDark"></div>
+    </div>
     <div id="wrapper">
+
         <div id="sb">
             <div id="sbBg">
                 <img src="skin/scorebar-bg.png" />
@@ -18,14 +23,51 @@
                 <img src="skin/scorebar-colour.png" />
             </div>
         </div>
+
         <div id="score"></div>
-        <div id="acc"><div id="accdata">0</div><div></div></div>
+
+        <!-- <div id="map">
+            <div class="mapdata-container">
+                <div id="mapdata" class="mapdata-text"></div>
+            </div>
+        </div> -->
+
+        <div id="acc">
+            <div id="accdata">0</div>
+        </div>
+
         <div id="timer"></div>
-        <div id="combo"><div id="combodata">0</div><div></div></div>
-        <div id="pp"><div id="ppCurent" class="odometer ppNum">0</div> --> <div id="ppIfFc" class="odometer ppNum">0</div> <div class="ppText">pp<div></div>
+
+        <div id="combo">
+            <div id="combodata">0</div>
+        </div>
+
+        <div id="pp">
+            <div id="ppCurent" class="odometer ppNum">0</div>
+            --> <div id="ppIfFc" class="odometer ppNum">0</div> 
+            <div class="ppText">pp<div>
+        </div>
+
+        <div id="bpm">
+            <div id="bpmdata">0</div>
+        </div>
+
         <div id="ur">
             0
         </div>
+
+        <div id="star">
+            <div id="starStat">0</div>
+        </div>
+
+        <div id="cs">
+            <div id="csStat">0</div>
+        </div>
+
+        <div id="ar">
+            <div id="arStat">0</div>
+        </div>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
         <script src="deps/countUp.js"></script>
         <script src="deps/reconnecting-websocket.min.js"></script>

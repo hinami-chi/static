@@ -3,29 +3,32 @@
     src: url("./resources/Cabin-Bold.ttf");
 }
 
-body,html{
-    margin:0;
-    padding:0;
+body, html {
+    margin: 0;
+    padding: 0;
     width: 1920px;
     height: 1080px;
     font-family: "CustomFont";
 }
 
-#wrapper{
+#wrapper {
     opacity: 0;
     transition: 300ms;
 }
-#sb{
+
+#sb {
     position: absolute;
     top: 0;
     left: 0;
 }
-#sbBg{
+
+#sbBg {
     position: absolute;
     top: 0;
     left: 0;
 }
-#sbColor{
+
+#sbColor {
     position: absolute;
     top: 8px;
     left: 5px;
@@ -33,55 +36,55 @@ body,html{
     overflow: hidden;
     width: 645px;
 }
-#score{
+
+#score {
     position: absolute;
     top: 0px;
     right: 5px;
     font-size: 10px;
     color: white;
-    text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 }
-#acc{
+
+#acc {
     position: absolute;
     top: 68px;
     right: 12px;
     color: white;
-    text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
     display: flex;
 }
-#combo{
+
+#combo {
     position: absolute;
     bottom: 0px;
     left: 10px;
     color: white;
-    text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
     display: flex;
 }
-#pp{
+
+#pp {
     position: absolute;
     bottom: 90px;
     left: 15px;
     font-size: 40px;
     color: white;
-    text-shadow: 
-    -2px -2px 0 #000,  
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
     display: flex;
 }
+
+#bpm {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    font-size: 40px;
+    color: white;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+    display: flex;
+    white-space: nowrap;
+}
+
 #ur {
     position: fixed;
     bottom: 4%;
@@ -92,18 +95,84 @@ body,html{
     color: white;
 }
 
+#star {
+    position: fixed;
+    bottom: 8%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    font-size: 24px;
+    transition: 300ms ease-in-out;
+    color: white;
+}
+
+#cs {
+    position: fixed;
+    bottom: 4%;
+    left: 35%;
+    transform: translate(-50%, 50%);
+    font-size: 32px;
+    transition: 300ms ease-in-out;
+    color: white;
+}
+
+#ar {
+    position: fixed;
+    bottom: 4%;
+    left: 65%;
+    transform: translate(-50%, 50%);
+    font-size: 32px;
+    transition: 300ms ease-in-out;
+    color: white;
+}
+
+#map {
+    position: fixed;
+    bottom: 8%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    font-size: 32px;
+    transition: transform 300ms ease-in-out;
+    color: white;
+    white-space: nowrap;
+    width: 50%; /* Añade un ancho del 50% */
+    overflow: hidden; /* Oculta el contenido que desborda el 50% */
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+}
+
+.mapdata-container {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.mapdata-text {
+    animation: slide 5s linear infinite; /* Cambia la duración de la animación según tu preferencia */
+}
+
+@keyframes slide {
+    0% {
+        transform: translate(100%);
+    }
+
+    100% {
+        transform: translate(-100%);
+    }
+}
+
 #score img {
     width: auto; /* Tamaño deseado para las imágenes */
     height: 64px;
 }
+
 #acc img {
     width: auto; /* Tamaño deseado para las imágenes */
     height: 40px;
 }
+
 #combo img {
     width: auto; /* Tamaño deseado para las imágenes */
     height: 80px;
 }
+
 #timer {
     position: absolute;
     top: 68px;
@@ -111,13 +180,44 @@ body,html{
     height: 40px;
     width: 40px;
     transition: 100ms;
-    background: conic-gradient(#999999 0, rgba(0,0,0,0) 0);
+    background: conic-gradient(#999999 0, rgba(0, 0, 0, 0) 0);
     border-radius: 50%;
     border-color: white;
     border-width: 2px;
     border-style: solid;
-    box-shadow: 0px 0px 2px 2px rgba(255,255,255,0.5);
+    box-shadow: 0px 0px 2px 2px rgba(255, 255, 255, 0.5);
     color: white;
     line-height: 28px;
     font-size: 25px;
+}
+
+/* Agrega las reglas del fondo (#bg) aquí */
+#main {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+#bgwparrer {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+#bg {
+    max-height: 100%;
+    width: auto;
+    height: 100%;
+    position: absolute;
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta para centrar correctamente */
+    z-index: -1;
+    transition: ease;
+    opacity: 0.1; /* Cambia el valor según lo que desees */
+    filter: saturate(150%) blur(5px); /* Ajusta los valores según tus necesidades */
 }

@@ -8,9 +8,16 @@ let currentPP = document.getElementById("ppCurent");
 let ifFC = document.getElementById("ppIfFc");
 let pp = document.getElementById("pp");
 let ppContainer = document.getElementById("ppCurent");
+let bpmContainer = document.getElementById("bpmdata");
+let csStat = document.getElementById("csStat");
+let arStat = document.getElementById("arStat");
+let starStat = document.getElementById("starStat");
+let mapContainer = document.getElementById("mapdata");
+let mapContainer2 = document.getElementById("mapdata2");
 let comboContainer = document.getElementById("combodata");
 let accContainer = document.getElementById("accdata");
 let timer = document.getElementById('timer');
+let bg = document.getElementById("bg");
 //score.innerHTML = '0'.padStart(8,"0")
 
 socket.onopen = () => {
@@ -36,6 +43,7 @@ let animation = {
 let tempState;
 let tempTime;
 let tempTimeMax;
+let tempImg;
 
 socket.onmessage = event => {  
     let data = JSON.parse(event.data);
@@ -155,6 +163,27 @@ socket.onmessage = event => {
             timer.style.opacity = 1;
         }
     }
+    if (data.menu && data.menu.bm && data.menu.bm.stats && data.menu.bm.stats.BPM) {
+        let bpmmin = data.menu.bm.stats.BPM.min;
+        let bpmmax = data.menu.bm.stats.BPM.max;
+    
+        if (bpmmin === bpmmax) {
+            bpmContainer.textContent = `${bpmmin} BPM`;
+        } else {
+            bpmContainer.textContent = `${bpmmin} - ${bpmmax} BPM`;
+        }
+    }
+
+    if (data.menu && data.menu.bm && data.menu.bm.stats) {
+        let csStatValue = data.menu.bm.stats.CS;
+        let arStatValue = data.menu.bm.stats.AR;
+        let starStatValue = data.menu.bm.stats.fullSR.toFixed(2);
+    
+        csStat.textContent = `CS ${csStatValue}`;
+        arStat.textContent = `AR ${arStatValue}`;
+        starStat.textContent = `${starStatValue}☆`;
+    }
+    
     if(tempTime !== data.menu.bm.time.current || tempTimeMax !== data.menu.bm.time.full) {
         tempTime = data.menu.bm.time.current;
         if(tempTimeMax !== data.menu.bm.time.full) {
@@ -165,5 +194,12 @@ socket.onmessage = event => {
         style = "conic-gradient(#999999 " + timeString + "%, rgba(0,0,0,0) 0)";
         timer.style.background = style;
     }
+
+    if(tempImg !== data.menu.bm.path.full){
+        tempImg = data.menu.bm.path.full
+        data.menu.bm.path.full = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25')
+        bg.setAttribute('src',`http://127.0.0.1:24050/Songs/${data.menu.bm.path.full}?a=${Math.random(10000)}`)
+    }
+
     };
 }
