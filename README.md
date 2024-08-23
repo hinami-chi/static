@@ -5,11 +5,11 @@ static (frontend) folder for gosumemory / tosumemory
 
 ### hinami
 
-> Size: 1440x1080\
+> Size: recommended for 4:3 resolutions, not optimized for 16:9\
 > interface diabled\
-<img src="https://cdn.discordapp.com/attachments/1104984300736217141/1117253535134912522/image.png" width="500">\
+<img src="https://raw.githubusercontent.com/hinami-chi/static/master/hinami/img/interface%20disabled.png" width="500">\
 > interface enabled\
-<img src=https://cdn.discordapp.com/attachments/1104984300736217141/1117253843869249536/image.png width="500">\
+<img src="https://raw.githubusercontent.com/hinami-chi/static/master/hinami/img/interface%20enabled.png" width="500">\
 Edited by: [me][1]<br>
 
 [1]: https://github.com/hinami-chi
