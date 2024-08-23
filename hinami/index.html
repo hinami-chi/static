@@ -14,7 +14,44 @@
         <div id="bgDark"></div>
     </div>
     <div id="wrapper">
-
+        <div id="main">
+            <div id="h300g"></div>
+            <div id="h300"></div>
+            <div id="bar">
+                <div id="arrow"></div>
+                <div id="tick0"></div>
+                <div id="tick1"></div>
+                <div id="tick2"></div>
+                <div id="tick3"></div>
+                <div id="tick4"></div>
+                <div id="tick5"></div>
+                <div id="tick6"></div>
+                <div id="tick7"></div>
+                <div id="tick8"></div>
+                <div id="tick9"></div>
+                <div id="tick10"></div>
+                <div id="tick11"></div>
+                <div id="tick12"></div>
+                <div id="tick13"></div>
+                <div id="tick14"></div>
+                <div id="tick15"></div>
+                <div id="tick16"></div>
+                <div id="tick17"></div>
+                <div id="tick18"></div>
+                <div id="tick19"></div>
+                <div id="tick20"></div>
+                <div id="tick21"></div>
+                <div id="tick22"></div>
+                <div id="tick23"></div>
+                <div id="tick24"></div>
+                <div id="tick25"></div>
+                <div id="tick26"></div>
+                <div id="tick27"></div>
+                <div id="tick28"></div>
+                <div id="tick29"></div>
+                <div id="center"></div>
+            </div>
+        </div>
         <div id="sb">
             <div id="sbBg">
                 <img src="skin/scorebar-bg.png" />
@@ -24,6 +61,8 @@
             </div>
         </div>
 
+        <div id="nowPlaying">NP:</div>
+        
         <div id="score"></div>
 
         <!-- <div id="map">
@@ -37,7 +76,14 @@
         </div>
 
         <div id="timer"></div>
-
+       
+        <div id="rank"></div>
+        <div id="mods"></div>
+        
+        <div class="number-line" id="number-line">
+            <div class="mark" style="left: 0;"></div>
+            <!-- Añade más marcas numéricas aquí -->
+        </div>
         <div id="combo">
             <div id="combodata">0</div>
         </div>
@@ -52,9 +98,10 @@
             <div id="bpmdata">0</div>
         </div>
 
-        <div id="ur">
-            0
-        </div>
+        
+        <div id="ur" class="monoespaciado">0</div>
+
+        
 
         <div id="star">
             <div id="starStat">0</div>
@@ -67,8 +114,10 @@
         <div id="ar">
             <div id="arStat">0</div>
         </div>
-
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+        <script src="deps/smooth.js"></script>
         <script src="deps/countUp.js"></script>
         <script src="deps/reconnecting-websocket.min.js"></script>
         <script src="index.js"></script>
