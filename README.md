@@ -39,13 +39,6 @@ Designed by [hinami-chi](https://github.com/hinami-chi), this overlay offers:
    - Edit `hinami/config.json` to customize settings
    - Adjust the API key if necessary
 
-## ⚙️ Configuration
-
-**Parameters:**
-- `api`: Your osu! API key
-- `leaderboardEnable`: Enable/disable leaderboard (1/0)
-- `leaderboardTab`: Default leaderboard tab
-
 ## 🎯 Compatibility
 
 - ✅ **Resolutions:** Optimized for 4:3 (1024x768, 1280x960, 1600x1200)
