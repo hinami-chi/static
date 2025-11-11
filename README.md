@@ -109,7 +109,7 @@ This project is under the MIT License. See the `LICENSE` file for more details.
 ## 👤 Author
 
 **hinami-chi**
-- GitHub: [@hinami-chi](https://github.com/hinami-chi)
+- GitHub: [@hinami-chi](https://github.com/hinami-chi) / [@ryuuseinan](https://github.com/ryuuseinan) 
 
 ## 🙏 Acknowledgments
 
