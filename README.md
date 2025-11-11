@@ -1,18 +1,15 @@
-# 🎵 osu! Overlay Collection
+# 🎵 Hinami's osu! Overlay
 
-A collection of custom overlays for osu! compatible with gosumemory and tosumemory.
+A minimalist custom overlay for osu! compatible with gosumemory and tosumemory.
 
 ## 📋 Description
 
-This repository contains static frontend overlays designed to display real-time information during osu! gameplay. The overlays integrate seamlessly with memory tools like gosumemory or tosumemory.
+This is a static frontend overlay designed to display real-time information during osu! gameplay. The overlay integrates seamlessly with memory tools like gosumemory or tosumemory, providing a clean and modern interface for streamers and players.
 
-## 🎨 Available Overlays
+## 🎨 Overlay Features
 
-### hinami-chi's Overlay
+Designed by [hinami-chi](https://github.com/hinami-chi), this overlay offers:
 
-An minimalist overlay designed by [hinami-chi](https://github.com/hinami-chi).
-
-**Features:**
 - 🖥️ Optimized for 4:3 resolutions
 - 🎯 Clean and modern interface
 - 📊 Real-time score, combo and HP visualization
@@ -35,8 +32,8 @@ An minimalist overlay designed by [hinami-chi](https://github.com/hinami-chi).
    ```
 
 2. **Setup your memory tool:**
-   - For **gosumemory**: Place the overlay folder in the `static` directory
-   - For **tosumemory**: Configure the path to the overlay
+   - For **gosumemory**: Place the `hinami` folder in the `static` directory
+   - For **tosumemory**: Configure the path to the `hinami` overlay folder
 
 3. **Configure the overlay:**
    - Edit `hinami/config.json` to customize settings
