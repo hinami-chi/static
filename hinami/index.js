@@ -21,45 +21,7 @@ let rank = document.getElementById('rank');
 let bg = document.getElementById("bg");
 let modsContainer = document.getElementById("mods");
 let nowPlayingContainer = document.getElementById("nowPlaying");
-let urbar = document.getElementById('urbar');
 //score.innerHTML = '0'.padStart(8,"0")
-let tempState;
-let tempTime;
-let tempTimeMax;
-let tempImg;
-let prevH300;
-let prevH100;
-let prevH50;
-let prevH0;
-let tick = [];
-for (var t = 0; t < 30; t++) {
-    tick[t] = document.querySelectorAll("[id^=tick]")[t];
-}
-
-let bar = document.getElementById("bar");
-let center = document.getElementById("center");
-let arrow = document.getElementById("arrow");
-
-let early = document.getElementById("early");
-let late = document.getElementById("late");
-
-let h300g = document.getElementById("h300g");
-let h300 = document.getElementById("h300");
-
-let tH300g;
-let tH300;
-
-
-let state;
-let cur_ur;
-let cur_combo;
-
-let tempHitErrorArrayLength;
-let OD = 0;
-let tickPos;
-let fullPos;
-let tempAvg;
-let tempSmooth;
 
 socket.onopen = () => {
     console.log("Successfully Connected");
@@ -82,6 +44,10 @@ let animation = {
     pp: new CountUp('ppCurent', 0, 0, 0, .2, {useEasing: true, useGrouping: true,   separator: " ", decimal: "." }),
 }
 
+let tempState;
+let tempTime;
+let tempTimeMax;
+let tempImg;
 
 let modImages = {
     "HR": "selection-mod-hardrock.png",
@@ -148,6 +114,9 @@ socket.onmessage = event => {
             // Agregar el contenedor del dígito al contenedor de score principal
             scoreContainer.appendChild(digitContainer);
         });
+        
+        // Actualizar el contenido del score con el nuevo valor
+        //score.textContent = scoreValue.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); // Añadir separadores de miles
         
         // Reemplazar el contenido anterior del contenedor de score con el nuevo contenedor de dígitos
         score.innerHTML = '';
@@ -339,13 +308,23 @@ socket.onmessage = event => {
     
     // Aplicar la opacidad al elemento de la imagen
     bg.style.opacity = opacity;
+    
+    if(tempTime !== data.menu.bm.time.current || tempTimeMax !== data.menu.bm.time.full) {
+        tempTime = data.menu.bm.time.current;
+        if(tempTimeMax !== data.menu.bm.time.full) {
+            tempTimeMax = data.menu.bm.time.full;
+        }
+        time = (tempTime / tempTimeMax) * 100;
+        timeString = time.toString();
+        style = "conic-gradient(#999999 " + timeString + "%, rgba(0,0,0,0) 0)";
+        timer.style.background = style;
+    }
 
     if(tempImg !== data.menu.bm.path.full){
         tempImg = data.menu.bm.path.full
         data.menu.bm.path.full = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25')
         bg.setAttribute('src',`http://127.0.0.1:24050/Songs/${data.menu.bm.path.full}?a=${Math.random(10000)}`)
     }
-    /*
     // Función para convertir milisegundos a formato de hora (HH:MM:SS)
     function formatTime(milliseconds) {
         let totalSeconds = Math.floor(milliseconds / 1000); // Convertir a segundos
@@ -354,162 +333,20 @@ socket.onmessage = event => {
 
         return `${minutes.toString().padStart(2, '0')}:${secondsRemaining.toString().padStart(2, '0')}`;
     }
-    
-    */
 
-    if(tempTime !== data.menu.bm.time.current || tempTimeMax !== data.menu.bm.time.full) {
-        tempTime = data.menu.bm.time.current;
-        if(tempTimeMax !== data.menu.bm.time.full) {
-            tempTimeMax = data.menu.bm.time.full;
-        }
-        time = (tempTime / tempTimeMax) * 100;
-        timeString = time.toString();
-        style = "conic-gradient(#999999 " + timeString + "%, rgba(0,0,0,0) 0)";
-        timer.style.background = style;
-    }
+    // Dentro de la función socket.onmessage
+    if (data.menu && data.menu.bm && data.menu.bm.time) {
+        let currentTime = data.menu.bm.time.current;
+        let fullTime = data.menu.bm.time.full;
 
-    let play = data.gameplay;
-    if (state !== data.menu.state) {
-        state = data.menu.state;
-        if (state !== 2) {
-            for (var y = 0; y < 30; y++) {
-                tick[y].style.transform = "translateX(0)";
-                tick[y].style.opacity = 0;
-            }
-            tickPos = 0;
-            tempAvg = 0;
-            arrow.style.transform = "translateX(0)";  
-            bar.style.opacity = 0;
-            early.style.opacity = 0;
-            late.style.opacity = 0;
-            h300g.style.opacity = 0;
-            h300.style.opacity = 0;
-        } else {
-            bar.style.opacity = 1;
-            early.style.opacity = 1;
-            late.style.opacity = 1;
-            h300g.style.opacity = 1;
-            h300.style.opacity = 1;
-            
-            setTimeout(function(){
-                early.style.opacity = 0;
-                late.style.opacity = 0;
-            }, 1200);
-        }
-    }
-    if (tH300g !== play.hits.geki){
-        tH300g = play.hits.geki;
-        h300g.innerHTML = tH300g;
-    }
-    if (tH300 !== play.hits[300]){
-        tH300 = play.hits[300];
-        h300.innerHTML = tH300;
-    }
-    if (data.gameplay.hits.unstableRate == 0) {
-        for (var y = 0; y < 30; y++) {
-            tick[y].style.transform = "translateX(0)";
-            tick[y].style.opacity = 0;
-        }
-        arrow.style.transform = "translateX(0)";
-    }
-    if (cur_ur !== data.gameplay.hits.unstableRate) {
-        cur_ur = data.gameplay.hits.unstableRate;
-        tempAvg = 0;      
+        // Formatear los tiempos
+        let currentTimeFormatted = formatTime(currentTime);
+        let fullTimeFormatted = formatTime(fullTime);
+
+        // Actualizar los elementos en el HTML
+        document.getElementById("current-time").textContent = currentTimeFormatted;
+        document.getElementById("full-time").textContent = fullTimeFormatted;
     }
 
-    //source reference -> TryZCustomOverlay(made by FukutoTojido)
-    if (cur_combo !== data.gameplay.combo.current) {
-        OD = data.menu.bm.stats.memoryOD;
-        cur_combo = data.gameplay.combo.current;
-        tempSmooth = smooth(data.gameplay.hits.hitErrorArray, 4);
-        if (tempHitErrorArrayLength !== tempSmooth.length) {
-            tempHitErrorArrayLength = tempSmooth.length;
-            for (var a = 0; a < tempHitErrorArrayLength; a++) {
-                tempAvg = tempAvg * 0.90 + tempSmooth[a] * 0.1;
-            }
-            fullPos = (-10 * OD + 199.5);
-            tickPos = data.gameplay.hits.hitErrorArray[tempHitErrorArrayLength - 1] / fullPos * 145;
-            arrow.style.transform = `translateX(${(tempAvg / fullPos) * 150}px)`;
-            if((tempAvg / fullPos) * 150 > 2.5){
-                arrow.style.borderColor = "#FF4040 transparent transparent transparent"
-            }
-            else if((tempAvg / fullPos) * 150 < -2.5){
-        
-    if(tempTime !== data.menu.bm.time.current || tempTimeMax !== data.menu.bm.time.full) {
-        tempTime = data.menu.bm.time.current;
-        if(tempTimeMax !== data.menu.bm.time.full) {
-            tempTimeMax = data.menu.bm.time.full;
-        }
-        time = (tempTime / tempTimeMax) * 100;
-        timeString = time.toString();
-        style = "conic-gradient(#999999 " + timeString + "%, rgba(0,0,0,0) 0)";
-        timer.style.background = style;
-    }
-        arrow.style.borderColor = "#1985FF transparent transparent transparent"
-            }
-            else{
-                arrow.style.borderColor = "white transparent transparent transparent"
-            }
-
-            for (var c = 0; c < 30; c++) {
-        
-    if(tempTime !== data.menu.bm.time.current || tempTimeMax !== data.menu.bm.time.full) {
-        tempTime = data.menu.bm.time.current;
-        if(tempTimeMax !== data.menu.bm.time.full) {
-            tempTimeMax = data.menu.bm.time.full;
-        }
-        time = (tempTime / tempTimeMax) * 100;
-        timeString = time.toString();
-        style = "conic-gradient(#999999 " + timeString + "%, rgba(0,0,0,0) 0)";
-        timer.style.background = style;
-    }
-        if ((tempHitErrorArrayLength % 30) == ((c + 1) % 30)) {
-                    tick[c].style.opacity = 1;
-                    tick[c].style.transform = `translateX(${tickPos}px) translateY(0px)`;
-            
-                    var s = document.querySelectorAll("[id^=tick]")[c].style;
-                    s.opacity = 1;
-                    /*
-                    console.log("prevH50: " + prevH50 + " H50: " + data.gameplay.leaderboard.ourplayer.h50)
-                    console.log("prevH100: " + prevH100 + " H100: " + data.gameplay.leaderboard.ourplayer.h100)
-                    console.log("prevH300: " + prevH300 + " H300: " + data.gameplay.leaderboard.ourplayer.h300)
-                    */
-                    // Verificar y asignar color basado en cambios en h300 y h100
-                    if (data.gameplay.leaderboard.ourplayer.h300 !== prevH300) {
-                        //s.backgroundColor = "rgb(100,255,255)"; // Cyan for h300 increment
-                    } else if (data.gameplay.leaderboard.ourplayer.h100 !== prevH100) {
-                        //s.backgroundColor = "rgb(100,255,100)"; // Green for h100 increment
-                    } else if (data.gameplay.leaderboard.ourplayer.h50 !== prevH50) {
-                        //s.backgroundColor = "rgb(255,200,130)"; // Orange for h50 increment
-                    }
-
-                    (function fadeAndMove(s, tickPos) {
-                        var yOffset = -20;
-                        var speed = 5; // Increased speed for faster movement
-                        var opacityDecrement = 0.02; // Slightly higher decrement for faster fading
-                        var interval = 15; // Smaller interval for smoother and quicker updates
-            
-                        (function animate() {
-                            if ((s.opacity -= opacityDecrement) < 0) {
-                                s.opacity = 0;
-                            } else {
-                                yOffset -= speed;
-                                s.transform = `translateX(${tickPos}px) translateY(${yOffset}px)`;
-                                setTimeout(animate, interval);
-                            }
-                        })();
-                    })(s, tickPos);
-                    
-                    // Actualizar los valores previos después de asignar color
-                    prevH300 = data.gameplay.leaderboard.ourplayer.h300;
-                    prevH100 = data.gameplay.leaderboard.ourplayer.h100;
-                    prevH50 = data.gameplay.leaderboard.ourplayer.h50;
-                    prevH0 = data.gameplay.leaderboard.ourplayer.h0;
-                }
-            }
-            
-            
-        }
-    }
     };
 }

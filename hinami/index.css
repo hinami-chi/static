@@ -257,122 +257,14 @@ body, html {
     width: 100px; /* Ancho deseado */
     height: 100px; /* Altura deseada */
 }
-/*
-.number-line {
-    position: fixed;
-    bottom: 20%;
-    left: 50%;
-    justify-content: space-around;
-    transform: translate(-50%, 50%);
-    width: 25%;
-    height: 5px;
-    background-color: #ccc;
-}
-
-.mark {
-    position: absolute;
-    width: 1px;
-    height: 30px; 
-    background-color: #00bcd4; 
-    top: -11px;
-}
-*/
-
 #main {
-    position: absolute;
-    width: 150px;
-    bottom: 15px;
-    left: 645px;
-    justify-content: space-around;
-    transform: translate(-50%, 50%);
-}
-
-#bar {
-    position: absolute;
-    height: 0px;
-    background-color: white;
-    transition: ease-in-out 1ms;
-}
-
-#arrow{
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    top: -27.5px;
-    left: 140px;
-    
-    border-style:solid;
-    border-width: 10px;
-    border-color: white transparent transparent transparent;
-    
-    transition: ease-out 1ms;
-    transform-origin: 50% 50%;
-}
-
-#center {
-    position: absolute;
-    top:-11px;
-    left: 147.5px;
-    width: 5px;
-    height: 25px;
-    background-color: red;
-    transition: ease-out 1ms;
-}
-
-#tick0,
-#tick1,
-#tick2,
-#tick3,
-#tick4,
-#tick5,
-#tick6,
-#tick7,
-#tick8,
-#tick9,
-#tick10,
-#tick11,
-#tick12,
-#tick13,
-#tick14,
-#tick15,
-#tick16,
-#tick17,
-#tick18,
-#tick19,
-#tick20,
-#tick21,
-#tick22,
-#tick23,
-#tick24,
-#tick25,
-#tick26,
-#tick27,
-#tick28,
-#tick29
-{position: absolute; top: -9px;height: 20px;width: 3px;background-color: white;left: 147.5px;}
-#h300g,
-#h300{position: absolute;top: 20px;font-family: TOMMY;font-weight: bold;font-size:15pt;color: #eaeaea;text-shadow: -1px 1px 2px #000, 1px 1px 2px #000;}
-#h300g{right: 60%;right: 214px;}
-#h300{left: 59%;right: 100px;}
-#early{
-    position: absolute;
-    top: -13px;
-    left: 40px;
-    font-size: 18px;
-    font-weight: bold;
-    
-    color: #B3D7FF;
-    transition: ease-out 1ms;
-}
-#late{
-    position: absolute;
-    top: -13px;
-    right: 40px;
-    font-size: 18px;
-    font-weight: bold;
-    
-    color: #FFB3B3;
-    transition: ease-out 1ms;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
 }
 
 #bgwparrer {

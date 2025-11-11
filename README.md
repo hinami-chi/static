@@ -1,15 +1,125 @@
-# static
-static (frontend) folder for gosumemory / tosumemory
+# 🎵 osu! Overlay Collection
 
-# My overlay
+A collection of custom overlays for osu! compatible with gosumemory and tosumemory.
 
-### hinami
+## 📋 Description
 
-> Size: recommended for 4:3 resolutions, not optimized for 16:9\
-> interface diabled\
-<img src="https://raw.githubusercontent.com/hinami-chi/static/master/hinami/img/interface%20disabled.png" width="500">\
-> interface enabled\
-<img src="https://raw.githubusercontent.com/hinami-chi/static/master/hinami/img/interface%20enabled.png" width="500">\
-Edited by: [me][1]<br>
+This repository contains static frontend overlays designed to display real-time information during osu! gameplay. The overlays integrate seamlessly with memory tools like gosumemory or tosumemory.
 
-[1]: https://github.com/hinami-chi
+## 🎨 Available Overlays
+
+### hinami-chi's Overlay
+
+An minimalist overlay designed by [hinami-chi](https://github.com/hinami-chi).
+
+**Features:**
+- 🖥️ Optimized for 4:3 resolutions
+- 🎯 Clean and modern interface
+- 📊 Real-time score, combo and HP visualization
+- 🏆 Visual ranking system
+- 🎵 Current song information
+- ⚙️ Configurable states (interface enabled/disabled)
+
+**Preview:**
+
+| Interface Disabled | Interface Enabled |
+|-------------------|-------------------|
+| <img src="hinami/img/interface%20disabled.png" width="400"> | <img src="hinami/img/interface%20enabled.png" width="400"> |
+
+## 🚀 Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/hinami-chi/static.git
+   cd static
+   ```
+
+2. **Setup your memory tool:**
+   - For **gosumemory**: Place the overlay folder in the `static` directory
+   - For **tosumemory**: Configure the path to the overlay
+
+3. **Configure the overlay:**
+   - Edit `hinami/config.json` to customize settings
+   - Adjust the API key if necessary
+
+## ⚙️ Configuration
+
+**Parameters:**
+- `api`: Your osu! API key
+- `leaderboardEnable`: Enable/disable leaderboard (1/0)
+- `leaderboardTab`: Default leaderboard tab
+
+## 🎯 Compatibility
+
+- ✅ **Resolutions:** Optimized for 4:3 (1024x768, 1280x960, 1600x1200)
+- ✅ **Tools:** gosumemory, tosumemory
+- ✅ **Browsers:** Chrome, Firefox, Edge
+- ⚠️ **16:9:** Functional but not optimized
+
+## 📁 Project Structure
+
+```
+hinami/
+├── index.html          # Main overlay file
+├── index.css           # Overlay styles  
+├── index.js            # Logic and WebSocket
+├── config.json         # Configuration
+├── deps/               # JavaScript dependencies
+│   ├── countUp.js
+│   ├── reconnecting-websocket.min.js
+│   └── smooth.js
+├── img/                # Screenshots
+├── resources/          # Custom fonts
+└── skin/               # Visual elements (rankings, numbers, etc.)
+```
+
+## 🔧 Customization
+
+### Modify Styles
+Edit `hinami/index.css` to change:
+- Theme colors
+- Element positioning  
+- Font sizes
+- Transparencies
+
+### Change Fonts
+Fonts are located in `hinami/resources/`:
+- `Cabin-Bold.ttf` - Main text
+- `Digital-Serial Regular.ttf` - Score numbers
+- `Roboto-Bold.ttf` - Secondary text
+
+### Graphic Elements
+Visual elements are in `hinami/skin/`:
+- Rankings (S, A, B, C, D, X, SH, XH)
+- Score digits (0-9)
+- Progress bars
+- Mod icons
+
+## 🤝 Contributing
+
+Contributions are welcome! If you have ideas to improve the overlay:
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is under the MIT License. See the `LICENSE` file for more details.
+
+## 👤 Author
+
+**hinami-chi**
+- GitHub: [@hinami-chi](https://github.com/hinami-chi)
+
+## 🙏 Acknowledgments
+
+- osu! community for feedback and suggestions
+- gosumemory and tosumemory developers
+- Creators of the libraries used
+
+---
+
+⭐ If you like this project, don't forget to give it a star!
