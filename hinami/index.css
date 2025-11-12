@@ -285,3 +285,67 @@ body, html {
     transition: ease;
     filter: saturate(150%) blur(3px); /* Ajusta los valores según tus necesidades */
 }
+
+#hits {
+    position: absolute;
+    top: 170px;
+    min-width: 160px;
+    left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 24px;
+    color: white;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+}
+
+.hit-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 120px;
+    padding: 2px 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    transition: background-color 200ms ease;
+}
+
+.hit-count {
+    font-weight: bold;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+.hit-label {
+    font-size: 20px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+/* Colores específicos para cada tipo de hit */
+#hits300 {
+    color: #00ccff; /* Azul brillante para 300s */
+}
+
+#hits100 {
+    color: #66ff66; /* Verde para 100s */
+}
+
+#hits50 {
+    color: #ffaa00; /* Naranja para 50s */
+}
+
+#hitsMiss {
+    color: #ff6666; /* Rojo para misses */
+}
+
+/* Efecto de pulso cuando cambian los valores */
+.hit-stat.updated {
+    animation: hitPulse 300ms ease;
+}
+
+@keyframes hitPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}

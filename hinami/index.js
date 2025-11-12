@@ -21,6 +21,57 @@ let rank = document.getElementById('rank');
 let bg = document.getElementById("bg");
 let modsContainer = document.getElementById("mods");
 let nowPlayingContainer = document.getElementById("nowPlaying");
+
+// Variables para el efecto de opacidad del combo
+let lastComboMilestone = 0;
+let isOpacityAnimating = false;
+
+// Variables para animación de combo tipo casino
+let targetCombo = 0;
+let currentDisplayCombo = 0;
+let comboAnimationId = null;
+
+// Variables para animación de accuracy tipo casino
+let targetAcc = 0;
+let currentDisplayAcc = 0;
+let accAnimationId = null;
+
+// Variables para animación de score tipo casino
+let targetScore = 0;
+let currentDisplayScore = 0;
+let scoreAnimationId = null;
+
+// Variables para animación de PP tipo casino
+let targetPP = 0;
+let currentDisplayPP = 0;
+let ppAnimationId = null;
+
+// Variables para animación de PP If FC tipo casino
+let targetPPIfFC = 0;
+let currentDisplayPPIfFC = 0;
+let ppIfFCAnimationId = null;
+
+// Variables para animación de hits tipo casino
+let target300s = 0;
+let currentDisplay300s = 0;
+let hits300AnimationId = null;
+
+let target100s = 0;
+let currentDisplay100s = 0;
+let hits100AnimationId = null;
+
+let target50s = 0;
+let currentDisplay50s = 0;
+let hits50AnimationId = null;
+
+let targetSB = 0;
+let currentDisplaySB = 0;
+let hitsSBAnimationId = null;
+
+let targetMiss = 0;
+let currentDisplayMiss = 0;
+let hitsMissAnimationId = null;
+
 //score.innerHTML = '0'.padStart(8,"0")
 
 socket.onopen = () => {
@@ -87,103 +138,56 @@ socket.onmessage = event => {
     // Dentro de la función socket.onmessage
 
     if (data.gameplay.score != -1) {
-        let scoreValue = data.gameplay.score.toString().padStart(8, "0");
-        //let previousScore = score.textContent.replace(/,/g, ''); // Obtener el valor anterior del score
-        
-        // Crear un contenedor flex para los dígitos del score
-        let scoreContainer = document.createElement("div");
-        scoreContainer.classList.add("score-container"); // Agregar una clase para el contenedor
-        
-        // Establecer el estilo flex para el contenedor principal del score
-        scoreContainer.style.display = "flex";
-        scoreContainer.style.justifyContent = "flex-start"; // Alinear los dígitos de izquierda a derecha
-        
-        // Iterar sobre cada dígito en el scoreValue y crear un contenedor para cada dígito
-        scoreValue.split("").forEach((digit, index) => {
-            // Crear un nuevo contenedor para el dígito
-            let digitContainer = document.createElement("div");
-            digitContainer.classList.add("score-digit"); // Agregar una clase para el estilo del contenedor
-            digitContainer.style.marginRight = "2px"; // Agregar margen derecho de 5px
-            // Crear un elemento span para el dígito y establecer su texto como el dígito actual
-            let digitElement = document.createElement("span");
-            digitElement.textContent = digit;
-            
-            // Agregar el elemento del dígito al contenedor del dígito
-            digitContainer.appendChild(digitElement);
-            
-            // Agregar el contenedor del dígito al contenedor de score principal
-            scoreContainer.appendChild(digitContainer);
-        });
-        
-        // Actualizar el contenido del score con el nuevo valor
-        //score.textContent = scoreValue.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); // Añadir separadores de miles
-        
-        // Reemplazar el contenido anterior del contenedor de score con el nuevo contenedor de dígitos
-        score.innerHTML = '';
-        score.appendChild(scoreContainer);
+        // Animar el score con efecto tipo casino
+        animateScoreToCasino(data.gameplay.score);
     }
 
     if (data.gameplay.accuracy !== "") {
         let accValue = parseFloat(data.gameplay.accuracy);
-        let roundedAcc = accValue.toFixed(2);
-    
-        let accDigits = roundedAcc.toString().split("");
-        accContainer.innerHTML = ""; // Elimina el contenido existente antes de agregar las nuevas imágenes
-
-        // Establecer el estilo flex para el contenedor principal del acc
-        accContainer.style.display = "flex";
-        accContainer.style.justifyContent = "flex-start"; // Alinear los dígitos de izquierda a derecha
-        
-        accDigits.forEach((digit, index) => {
-            // Crear un nuevo contenedor para el dígito
-            let digitContainer = document.createElement("div");
-            digitContainer.classList.add("acc-digit"); // Agregar una clase para el estilo del contenedor
-            digitContainer.style.marginRight = "2px"; // Agregar margen derecho de 5px
-            // Crear un elemento span para el dígito y establecer su texto como el dígito actual
-            let digitElement = document.createElement("span");
-            digitElement.textContent = digit;
-            
-            // Agregar el elemento del dígito al contenedor del dígito
-            digitContainer.appendChild(digitElement);
-            
-            // Agregar el contenedor del dígito al contenedor de acc principal
-            accContainer.appendChild(digitContainer);
-        });
-        
-        acc.innerHTML = '';
-        // Añadir el % al final del accContainer
-        let percentElement = document.createElement("span");
-        percentElement.textContent = "%";
-        accContainer.appendChild(percentElement);
-        acc.appendChild(accContainer);
+        // Animar el accuracy con efecto tipo casino
+        animateAccToCasino(accValue);
     }
     
     if (data.gameplay.combo.current !== "") {
-        let comboDigits = data.gameplay.combo.current.toString().split("");
-        comboContainer.innerHTML = ""; // Elimina el contenido existente antes de agregar las nuevas imágenes
-        comboContainer.style.display = "flex";
-        comboContainer.style.justifyContent = "flex-start"; // Alinear los dígitos de izquierda a derecha
+        let currentCombo = data.gameplay.combo.current;
         
-        comboDigits.forEach(digit => {
-            let digitContainer = document.createElement("div");
-            digitContainer.classList.add("combo-digit"); // Agregar una clase para el estilo del contenedor
-            digitContainer.style.marginRight = "2px"; // Agregar margen derecho de 5px
-            // Crear un elemento span para el dígito y establecer su texto como el dígito actual
-            let digitElement = document.createElement("span");
-            digitElement.textContent = digit;
-            
-            // Agregar el elemento del dígito al contenedor del dígito
-            digitContainer.appendChild(digitElement);
-            
-            // Agregar el contenedor del dígito al contenedor de combo principal
-            comboContainer.appendChild(digitContainer);
-        });
-    // Reemplazar el símbolo "%" con la imagen "score-percent.png"
-    let percentImage = document.createElement("img");
-    percentImage.src = "skin/score-x.png";
-    percentImage.alt = "percent";
-    comboContainer.appendChild(percentImage);
+        // Verificar si el combo es múltiplo de 50 y no hemos animado para este milestone
+        let currentMilestone = Math.floor(currentCombo / 50) * 50;
+        if (currentCombo >= 50 && currentMilestone > lastComboMilestone && !isOpacityAnimating) {
+            lastComboMilestone = currentMilestone;
+            triggerOpacityEffect();
+        }
+        
+        // Resetear el milestone si el combo baja (por ejemplo, por un miss)
+        if (currentCombo < lastComboMilestone) {
+            lastComboMilestone = Math.floor(currentCombo / 50) * 50;
+        }
+        
+        // Animar el combo con efecto tipo casino
+        animateComboToCasino(currentCombo);
     }
+
+    // Animar todos los hits con efecto tipo casino
+    if (data.gameplay.hits && data.gameplay.hits["300"] !== undefined && data.gameplay.hits["300"] !== null) {
+        animate300sToCasino(data.gameplay.hits["300"]);
+    }
+
+    if (data.gameplay.hits && data.gameplay.hits["100"] !== undefined && data.gameplay.hits["100"] !== null) {
+        animate100sToCasino(data.gameplay.hits["100"]);
+    }
+    
+    if (data.gameplay.hits && data.gameplay.hits["50"] !== undefined && data.gameplay.hits["50"] !== null) {
+        animate50sToCasino(data.gameplay.hits["50"]);
+    }
+    
+    if (data.gameplay.hits && data.gameplay.hits.sliderBreaks !== undefined && data.gameplay.hits.sliderBreaks !== null) {
+        animateSBToCasino(data.gameplay.hits.sliderBreaks);
+    }
+    
+    if (data.gameplay.hits && data.gameplay.hits["0"] !== undefined && data.gameplay.hits["0"] !== null) {
+        animateMissToCasino(data.gameplay.hits["0"]);
+    }
+
     if (data.gameplay.hits.grade.current !== undefined && data.gameplay.hits.grade.current !== null) {
         let currentRank = data.gameplay.hits.grade.current;
         if (currentRank === "SS") {
@@ -254,17 +258,19 @@ socket.onmessage = event => {
         animation.ur.update(0)
     }
     if(data.gameplay.pp.current != ''){
-        animation.pp.update(data.gameplay.pp.current)
+        // Animar el PP con efecto tipo casino
+        animatePPToCasino(data.gameplay.pp.current);
     }else{
-        currentPP.innerHTML = 0
+        currentPP.innerHTML = "0";
     }
+
     if(data.gameplay.pp.fc != ''){
-        ifFC.innerHTML = Math.round(data.gameplay.pp.fc)
-    }else if (tempState == 1){
-        ifFC.innerHTML = data.menu.pp[100]
-    }else {
-        ifFC.innerHTML = 0
+        // Animar el PP If FC con efecto tipo casino
+        animatePPIfFCToCasino(data.gameplay.pp.fc);
+    }else{
+        ifFC.innerHTML = "0";
     }
+    
     if(tempState !== data.menu.state){
         tempState = data.menu.state;
         if(tempState == 2 || tempState == 7 || tempState == 1){
@@ -306,9 +312,11 @@ socket.onmessage = event => {
     }
     let opacity = data.menu.mods.str.includes("FL") ? 0 : 0.05;
     
-    // Aplicar la opacidad al elemento de la imagen
-    bg.style.opacity = opacity;
-    
+    // No cambiar la opacidad si está en animación
+    if (!isOpacityAnimating) {
+        bg.style.opacity = opacity;
+    }
+
     if(tempTime !== data.menu.bm.time.current || tempTimeMax !== data.menu.bm.time.full) {
         tempTime = data.menu.bm.time.current;
         if(tempTimeMax !== data.menu.bm.time.full) {
@@ -349,4 +357,491 @@ socket.onmessage = event => {
     }
 
     };
+}
+
+// Configuración para el efecto de opacidad
+const OPACITY_EFFECT_CONFIG = {
+    totalDuration: 400, // Duración total en ms (puedes cambiar este valor)
+    maxOpacity: 0.1,    // Opacidad máxima durante el efecto
+    normalOpacity: 0.05 // Opacidad normal
+};
+
+// Función para el efecto de opacidad cada 50 de combo
+function triggerOpacityEffect() {
+    isOpacityAnimating = true;
+    
+    // Calcular tiempos con desvanecimiento más lento
+    const transitionTime = OPACITY_EFFECT_CONFIG.totalDuration * 0.5; // 30% para subir
+    const holdTime = OPACITY_EFFECT_CONFIG.totalDuration * 0.1;       // 10% mantener
+    const fadeOutTime = OPACITY_EFFECT_CONFIG.totalDuration * 1.5;    // 60% para bajar (más lento)
+    
+    // Transición suave para aumentar opacidad
+    bg.style.transition = `opacity ${transitionTime}ms ease`;
+    bg.style.opacity = OPACITY_EFFECT_CONFIG.maxOpacity;
+    
+    // Después del tiempo de subida + mantener, iniciar bajada lenta
+    setTimeout(() => {
+        // Transición más lenta para volver a la opacidad normal
+        bg.style.transition = `opacity ${fadeOutTime}ms ease-out`;
+        let normalOpacity = bg.dataset.flMod === 'true' ? 0 : OPACITY_EFFECT_CONFIG.normalOpacity;
+        bg.style.opacity = normalOpacity;
+        
+        // Resetear después de que termine la transición de bajada
+        setTimeout(() => {
+            isOpacityAnimating = false;
+            bg.style.transition = '';
+        }, fadeOutTime);
+    }, transitionTime + holdTime);
+}
+
+// Función para animar el combo como casino
+function animateComboToCasino(newCombo) {
+    if (comboAnimationId) {
+        cancelAnimationFrame(comboAnimationId);
+    }
+    
+    targetCombo = newCombo;
+    
+    function animateStep() {
+        const diff = targetCombo - currentDisplayCombo;
+        if (Math.abs(diff) < 0.1) {
+            currentDisplayCombo = targetCombo;
+            updateComboDisplay(Math.floor(currentDisplayCombo));
+            return;
+        }
+        
+        // Animación lenta tipo casino
+        currentDisplayCombo += diff * 0.1; // Ajusta la velocidad aquí
+        updateComboDisplay(Math.floor(currentDisplayCombo));
+        
+        comboAnimationId = requestAnimationFrame(animateStep);
+    }
+    
+    animateStep();
+}
+
+// Función para actualizar la visualización del combo
+function updateComboDisplay(combo) {
+    let comboString = combo.toString();
+    let comboDigits = comboString.split("");
+    
+    comboContainer.innerHTML = "";
+    comboContainer.style.display = "flex";
+    comboContainer.style.justifyContent = "flex-start";
+    comboContainer.style.alignItems = "center";
+    comboContainer.style.gap = "5px"; // Agregar esta línea
+    
+    // Crear dígitos de izquierda a derecha usando las clases existentes
+    comboDigits.forEach((digit, index) => {
+        let digitBox = document.createElement("div");
+        digitBox.classList.add("combo-digit-box"); // Usar clase CSS existente
+        
+        let digitElement = document.createElement("span");
+        digitElement.textContent = digit;
+        digitElement.classList.add("combo-digit"); // Usar clase CSS existente
+        
+        digitBox.appendChild(digitElement);
+        comboContainer.appendChild(digitBox);
+    });
+    
+    // Agregar el símbolo X al final
+    let xBox = document.createElement("div");
+    xBox.classList.add("combo-x-box");
+    
+    let xImg = document.createElement("img");
+    xImg.src = "skin/score-x.png";
+    xImg.alt = "x";
+    
+    xBox.appendChild(xImg);
+    comboContainer.appendChild(xBox);
+}
+
+// Función para animar el accuracy como casino
+function animateAccToCasino(newAcc) {
+    if (accAnimationId) {
+        cancelAnimationFrame(accAnimationId);
+    }
+    
+    targetAcc = newAcc;
+    
+    function animateStep() {
+        const diff = targetAcc - currentDisplayAcc;
+        if (Math.abs(diff) < 0.01) {
+            currentDisplayAcc = targetAcc;
+            updateAccDisplay(currentDisplayAcc);
+            accAnimationId = null;
+            return;
+        }
+        
+        // Animación lenta tipo casino
+        currentDisplayAcc += diff * 0.1; // Ajusta la velocidad aquí
+        updateAccDisplay(currentDisplayAcc);
+        
+        accAnimationId = requestAnimationFrame(animateStep);
+    }
+    
+    animateStep();
+}
+
+// Función para actualizar la visualización del accuracy
+function updateAccDisplay(accValue) {
+    let roundedAcc = accValue.toFixed(2);
+    let accDigits = roundedAcc.toString().split("");
+    
+    accContainer.innerHTML = "";
+    accContainer.style.display = "flex";
+    accContainer.style.justifyContent = "flex-start";
+    accContainer.style.alignItems = "center";
+    accContainer.style.gap = "3px";
+    
+    accDigits.forEach((digit, index) => {
+        let digitElement = document.createElement("span");
+        digitElement.textContent = digit;
+        digitElement.classList.add("acc-digit");
+        accContainer.appendChild(digitElement);
+    });
+    
+    // Añadir el % al final del accContainer
+    let percentElement = document.createElement("span");
+    percentElement.textContent = "%";
+    percentElement.classList.add("acc-percent");
+    accContainer.appendChild(percentElement);
+}
+
+// Función para animar el score como casino
+function animateScoreToCasino(newScore) {
+    if (scoreAnimationId) {
+        cancelAnimationFrame(scoreAnimationId);
+    }
+    
+    targetScore = newScore;
+    
+    function animateStep() {
+        const diff = targetScore - currentDisplayScore;
+        if (Math.abs(diff) < 1) {
+            currentDisplayScore = targetScore;
+            updateScoreDisplay(Math.floor(currentDisplayScore));
+            scoreAnimationId = null;
+            return;
+        }
+        
+        // Animación lenta tipo casino
+        currentDisplayScore += diff * 0.1; // Ajusta la velocidad aquí
+        updateScoreDisplay(Math.floor(currentDisplayScore));
+        
+        scoreAnimationId = requestAnimationFrame(animateStep);
+    }
+    
+    animateStep();
+}
+
+// Función para actualizar la visualización del score
+function updateScoreDisplay(scoreValue) {
+    let scoreString = scoreValue.toString().padStart(8, "0");
+    let scoreDigits = scoreString.split("");
+    
+    let scoreContainer = document.createElement("div");
+    scoreContainer.classList.add("score-container");
+    scoreContainer.style.display = "flex";
+    scoreContainer.style.justifyContent = "flex-start";
+    scoreContainer.style.alignItems = "center";
+    scoreContainer.style.gap = "3px";
+    
+    scoreDigits.forEach((digit, index) => {
+        let digitBox = document.createElement("div");
+        digitBox.classList.add("score-digit-box");
+        
+        let digitElement = document.createElement("span");
+        digitElement.textContent = digit;
+        digitElement.classList.add("score-digit");
+        
+        digitBox.appendChild(digitElement);
+        scoreContainer.appendChild(digitBox);
+    });
+    
+    score.innerHTML = '';
+    score.appendChild(scoreContainer);
+}
+
+// Función para animar el PP como casino
+function animatePPToCasino(newPP) {
+    if (ppAnimationId) {
+        cancelAnimationFrame(ppAnimationId);
+    }
+    
+    targetPP = newPP;
+    
+    function animateStep() {
+        const diff = targetPP - currentDisplayPP;
+        if (Math.abs(diff) < 0.1) {
+            currentDisplayPP = targetPP;
+            updatePPDisplay(Math.floor(currentDisplayPP));
+            ppAnimationId = null;
+            return;
+        }
+        
+        // Animación lenta tipo casino
+        currentDisplayPP += diff * 0.1; // Ajusta la velocidad aquí
+        updatePPDisplay(Math.floor(currentDisplayPP));
+        
+        ppAnimationId = requestAnimationFrame(animateStep);
+    }
+    
+    animateStep();
+}
+
+// Función para actualizar la visualización del PP
+function updatePPDisplay(ppValue) {
+    let ppString = ppValue.toString();
+    let ppDigits = ppString.split("");
+    
+    let ppContainer = document.createElement("div");
+    ppContainer.classList.add("pp-container");
+    ppContainer.style.display = "flex";
+    ppContainer.style.justifyContent = "flex-start";
+    ppContainer.style.alignItems = "center";
+    ppContainer.style.gap = "2px";
+    
+    ppDigits.forEach((digit, index) => {
+        let digitBox = document.createElement("div");
+        digitBox.classList.add("pp-digit-box");
+        
+        let digitElement = document.createElement("span");
+        digitElement.textContent = digit;
+        digitElement.classList.add("pp-digit");
+        
+        digitBox.appendChild(digitElement);
+        ppContainer.appendChild(digitBox);
+    });
+    
+    
+    currentPP.innerHTML = '';
+    currentPP.appendChild(ppContainer);
+}
+
+// Función para animar el PP If FC como casino
+function animatePPIfFCToCasino(newPP) {
+    if (ppIfFCAnimationId) {
+        cancelAnimationFrame(ppIfFCAnimationId);
+    }
+    
+    targetPPIfFC = newPP;
+    
+    function animateStep() {
+        const diff = targetPPIfFC - currentDisplayPPIfFC;
+        if (Math.abs(diff) < 0.1) {
+            currentDisplayPPIfFC = targetPPIfFC;
+            updatePPIfFCDisplay(Math.floor(currentDisplayPPIfFC));
+            ppIfFCAnimationId = null;
+            return;
+        }
+        
+        // Animación lenta tipo casino
+        currentDisplayPPIfFC += diff * 0.1; // Ajusta la velocidad aquí
+        updatePPIfFCDisplay(Math.floor(currentDisplayPPIfFC));
+        
+        ppIfFCAnimationId = requestAnimationFrame(animateStep);
+    }
+    
+    animateStep();
+}
+
+// Función para actualizar la visualización del PP If FC
+function updatePPIfFCDisplay(ppValue) {
+    let ppString = ppValue.toString();
+    let ppDigits = ppString.split("");
+    
+    let ppContainer = document.createElement("div");
+    ppContainer.classList.add("pp-iffc-container");
+    ppContainer.style.display = "flex";
+    ppContainer.style.justifyContent = "flex-start";
+    ppContainer.style.alignItems = "center";
+    ppContainer.style.gap = "2px";
+    
+    ppDigits.forEach((digit, index) => {
+        let digitBox = document.createElement("div");
+        digitBox.classList.add("pp-iffc-digit-box");
+        
+        let digitElement = document.createElement("span");
+        digitElement.textContent = digit;
+        digitElement.classList.add("pp-iffc-digit");
+        
+        digitBox.appendChild(digitElement);
+        ppContainer.appendChild(digitBox);
+    });
+    
+    ifFC.innerHTML = '';
+    ifFC.appendChild(ppContainer);
+}
+
+// Función para animar los 300s como casino
+function animate300sToCasino(new300s) {
+    if (hits300AnimationId) {
+        cancelAnimationFrame(hits300AnimationId);
+    }
+    
+    target300s = new300s;
+    
+    function animateStep() {
+        const diff = target300s - currentDisplay300s;
+        if (Math.abs(diff) < 0.1) {
+            currentDisplay300s = target300s;
+            update300sDisplay(Math.floor(currentDisplay300s));
+            hits300AnimationId = null;
+            return;
+        }
+        
+        // Animación lenta tipo casino
+        currentDisplay300s += diff * 0.1;
+        update300sDisplay(Math.floor(currentDisplay300s));
+        
+        hits300AnimationId = requestAnimationFrame(animateStep);
+    }
+    
+    animateStep();
+}
+
+// Función para animar los 100s como casino
+function animate100sToCasino(new100s) {
+    if (hits100AnimationId) {
+        cancelAnimationFrame(hits100AnimationId);
+    }
+    
+    target100s = new100s;
+    
+    function animateStep() {
+        const diff = target100s - currentDisplay100s;
+        if (Math.abs(diff) < 0.1) {
+            currentDisplay100s = target100s;
+            update100sDisplay(Math.floor(currentDisplay100s));
+            hits100AnimationId = null;
+            return;
+        }
+        
+        // Animación lenta tipo casino
+        currentDisplay100s += diff * 0.1;
+        update100sDisplay(Math.floor(currentDisplay100s));
+        
+        hits100AnimationId = requestAnimationFrame(animateStep);
+    }
+    
+    animateStep();
+}
+
+// Función para animar los 50s como casino
+function animate50sToCasino(new50s) {
+    if (hits50AnimationId) {
+        cancelAnimationFrame(hits50AnimationId);
+    }
+    
+    target50s = new50s;
+    
+    function animateStep() {
+        const diff = target50s - currentDisplay50s;
+        if (Math.abs(diff) < 0.1) {
+            currentDisplay50s = target50s;
+            update50sDisplay(Math.floor(currentDisplay50s));
+            hits50AnimationId = null;
+            return;
+        }
+        
+        // Animación lenta tipo casino
+        currentDisplay50s += diff * 0.1;
+        update50sDisplay(Math.floor(currentDisplay50s));
+        
+        hits50AnimationId = requestAnimationFrame(animateStep);
+    }
+    
+    animateStep();
+}
+
+// Función para animar los slider breaks como casino
+function animateSBToCasino(newSB) {
+    if (hitsSBAnimationId) {
+        cancelAnimationFrame(hitsSBAnimationId);
+    }
+    
+    targetSB = newSB;
+    
+    function animateStep() {
+        const diff = targetSB - currentDisplaySB;
+        if (Math.abs(diff) < 0.1) {
+            currentDisplaySB = targetSB;
+            updateSBDisplay(Math.floor(currentDisplaySB));
+            hitsSBAnimationId = null;
+            return;
+        }
+        
+        // Animación lenta tipo casino
+        currentDisplaySB += diff * 0.1;
+        updateSBDisplay(Math.floor(currentDisplaySB));
+        
+        hitsSBAnimationId = requestAnimationFrame(animateStep);
+    }
+    
+    animateStep();
+}
+
+// Función para animar los misses como casino
+function animateMissToCasino(newMiss) {
+    if (hitsMissAnimationId) {
+        cancelAnimationFrame(hitsMissAnimationId);
+    }
+    
+    targetMiss = newMiss;
+    
+    function animateStep() {
+        const diff = targetMiss - currentDisplayMiss;
+        if (Math.abs(diff) < 0.1) {
+            currentDisplayMiss = targetMiss;
+            updateMissDisplay(Math.floor(currentDisplayMiss));
+            hitsMissAnimationId = null;
+            return;
+        }
+        
+        // Animación lenta tipo casino
+        currentDisplayMiss += diff * 0.1;
+        updateMissDisplay(Math.floor(currentDisplayMiss));
+        
+        hitsMissAnimationId = requestAnimationFrame(animateStep);
+    }
+    
+    animateStep();
+}
+
+// Funciones para actualizar la visualización de los hits con espaciado
+function update300sDisplay(hits300Value) {
+    let hits300Container = document.querySelector('#hits300 .hit-count');
+    if (hits300Container) {
+        // Aplicar el mismo formato con espaciado que el score/PP
+        hits300Container.textContent = hits300Value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+}
+
+function update100sDisplay(hits100Value) {
+    let hits100Container = document.querySelector('#hits100 .hit-count');
+    if (hits100Container) {
+        hits100Container.textContent = hits100Value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+}
+
+function update50sDisplay(hits50Value) {
+    let hits50Container = document.querySelector('#hits50 .hit-count');
+    if (hits50Container) {
+        hits50Container.textContent = hits50Value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+}
+
+function updateSBDisplay(sbValue) {
+    let hitsSBContainer = document.querySelector('#hitsSB .hit-count');
+    if (hitsSBContainer) {
+        hitsSBContainer.textContent = sbValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+}
+
+function updateMissDisplay(missValue) {
+    let hitsMissContainer = document.querySelector('#hitsMiss .hit-count');
+    if (hitsMissContainer) {
+        hitsMissContainer.textContent = missValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
 }
