@@ -150,19 +150,33 @@ socket.onmessage = event => {
     
     if (data.gameplay.combo.current !== "") {
         let currentCombo = data.gameplay.combo.current;
-        
-        // Verificar si el combo es múltiplo de 50 y no hemos animado para este milestone
-        let currentMilestone = Math.floor(currentCombo / 50) * 50;
-        if (currentCombo >= 50 && currentMilestone > lastComboMilestone && !isOpacityAnimating) {
+
+        // Milestone: cada 30 hasta 100, luego cada 50
+        let currentMilestone;
+        if (currentCombo < 60) {
+            currentMilestone = Math.floor(currentCombo / 30) * 30;
+        } else {
+            currentMilestone = 100 + Math.floor((currentCombo - 100) / 50) * 50;
+        }
+
+        if (
+            currentCombo >= 30 &&
+            currentMilestone > lastComboMilestone &&
+            !isOpacityAnimating
+        ) {
             lastComboMilestone = currentMilestone;
             triggerOpacityEffect();
         }
-        
+
         // Resetear el milestone si el combo baja (por ejemplo, por un miss)
         if (currentCombo < lastComboMilestone) {
-            lastComboMilestone = Math.floor(currentCombo / 50) * 50;
+            if (currentCombo < 100) {
+                lastComboMilestone = Math.floor(currentCombo / 30) * 30;
+            } else {
+                lastComboMilestone = 100 + Math.floor((currentCombo - 100) / 50) * 50;
+            }
         }
-        
+
         // Animar el combo con efecto tipo casino
         animateComboToCasino(currentCombo);
     }
@@ -362,7 +376,7 @@ socket.onmessage = event => {
 // Configuración para el efecto de opacidad
 const OPACITY_EFFECT_CONFIG = {
     totalDuration: 400, // Duración total en ms (puedes cambiar este valor)
-    maxOpacity: 0.1,    // Opacidad máxima durante el efecto
+    maxOpacity: 0.15,    // Opacidad máxima durante el efecto
     normalOpacity: 0.05 // Opacidad normal
 };
 
@@ -845,3 +859,76 @@ function updateMissDisplay(missValue) {
         hitsMissContainer.textContent = missValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
 }
+
+// --- reemplazo: usar plantilla en HTML para generar filas ---
+(function () {
+    const listContainer = document.getElementById('leaderboard-players');
+    const template = document.getElementById('leader-template');
+
+    if (!listContainer || !template) {
+        console.warn('Leaderboard template o contenedor no encontrados.');
+        return;
+    }
+
+    function createRowFromTemplate(s, our) {
+        const row = template.cloneNode(true);
+        row.removeAttribute('id');
+        row.classList.remove('template');
+        row.style.display = ''; // mostrar
+
+        const posEl = row.querySelector('.player-pos');
+        const nameEl = row.querySelector('.player-title');
+        const scoreEl = row.querySelector('.player-score');
+        const comboEl = row.querySelector('.player-combo');
+
+        if (posEl) posEl.textContent = s.position != null ? `#${s.position}` : '';
+        if (nameEl) nameEl.textContent = s.name || '';
+        if (scoreEl) scoreEl.textContent = (s.score != null) ? Number(s.score).toLocaleString() : '';
+        const comboText = (s.maxCombo != null && s.maxCombo !== 0) ? `${s.maxCombo}x` : (s.combo != null ? `${s.combo}x` : '');
+        if (comboEl) comboEl.textContent = comboText;
+
+        if (our && s.name === our.name && s.position === our.position) {
+            row.classList.add('current');
+        }
+
+        return row;
+    }
+
+    function renderSlotListUsingTemplate(slots, our) {
+        listContainer.innerHTML = '';
+        slots.sort((a,b) => (a.position||0) - (b.position||0));
+        for (const s of slots) {
+            listContainer.appendChild(createRowFromTemplate(s, our));
+        }
+        if (our && !slots.some(x => x.name === our.name && x.position === our.position)) {
+            listContainer.appendChild(createRowFromTemplate(our, our));
+        }
+    }
+
+    // registrar listener existente (usa el socket que ya tienes)
+    if (typeof socket !== 'undefined' && socket && socket.addEventListener) {
+        // añade un listener específico que solo maneja leaderboard
+        socket.addEventListener('message', ev => {
+            try {
+                const parsed = JSON.parse(ev.data);
+                const lb = parsed?.gameplay?.leaderboard;
+                const slots = Array.isArray(lb?.slots) ? lb.slots.slice() : [];
+                const our = lb?.ourplayer ?? null;
+
+                if (slots.length) {
+                    renderSlotListUsingTemplate(slots, our);
+                    setTimeout(() => {
+                        const cur = document.querySelector('#leaderboard-players .leader-name.current');
+                        if (cur) cur.scrollIntoView({behavior:'smooth', block:'center'});
+                    }, 80);
+                } else if (parsed?.gameplay?.name) {
+                    renderSlotListUsingTemplate([{ position: parsed.gameplay.position || '', name: parsed.gameplay.name, score: parsed.gameplay.score || '' }], null);
+                }
+            } catch (e) {
+                console.error('leaderboard template render error', e);
+            }
+        });
+    } else {
+        console.warn('socket no definido: leaderboard listener no registrado');
+    }
+})();

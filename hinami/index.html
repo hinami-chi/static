@@ -46,7 +46,7 @@
             <div id="combodata">0</div>
         </div>
 
-        <!-- Nuevo contenedor para mostrar los hits -->
+        <!-- hits --> 
         <div id="hits">
             <div id="hits300" class="hit-stat">
                 <span class="hit-count">0</span>
@@ -67,6 +67,29 @@
             <div id="hitsMiss" class="hit-stat">
                 <span class="hit-count">0</span>
                 <span class="hit-label">Miss</span>
+            </div>
+        </div>
+
+        <div id="leaderboard" class="leaderboard" aria-live="polite" style="display:block;">
+            <div id="leaderboard-players" class="leaderboard-list" role="list">
+                <div id="leader-template" class="leader-name template" aria-hidden="true">
+                    <div class="player-meta">
+                        <div class="player-title-container">
+                            <div class="player-title">Player name</div>
+                        </div>
+                        <div class="player-score-container">
+                            <span class="player-score">0</span>
+                        </div>
+                    </div>
+                    <div class="player-right">
+                        <div class="player-pos-container">
+                            <span class="player-pos">#00</span>
+                        </div>
+                        <div class="player-combo-container">
+                            <span class="player-combo">0x</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -95,6 +118,7 @@
         <div id="ar">
             <div id="arStat">0</div>
         </div>
+
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>

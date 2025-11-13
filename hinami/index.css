@@ -283,12 +283,12 @@ body, html {
     transform: translate(-50%, -50%); /* Ajusta para centrar correctamente */
     z-index: -1;
     transition: ease;
-    filter: saturate(150%) blur(3px); /* Ajusta los valores según tus necesidades */
+    filter: saturate(150%) blur(1px); /* Ajusta los valores según tus necesidades */
 }
 
 #hits {
     position: absolute;
-    top: 170px;
+    top: 160px;
     min-width: 160px;
     left: 15px;
     display: flex;
@@ -349,3 +349,144 @@ body, html {
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
+
+/* Leaderboard (estructura y estilos, mantener diseño fuera del JS) */
+.leaderboard {
+    position: absolute;
+    left: 0;               /* quitar margen izquierdo */
+    top: 390px;
+    width: 300px;        /* ajustar ancho si es necesario */
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.leaderboard-list {
+    height: 470px;
+    overflow-y: auto;
+    padding: 10px 4px;
+    -ms-overflow-style: none;      /* IE/Edge */
+    scrollbar-width: none;         /* Firefox */
+}
+
+.leaderboard-list::-webkit-scrollbar {
+    display: none;                 /* Chrome, Safari y Opera */
+}
+
+/* Opcional: en vez de ocultarla totalmente, usar una thumb muy sutil
+.leaderboard-list::-webkit-scrollbar { width: 8px; }
+.leaderboard-list::-webkit-scrollbar-track { background: transparent; }
+.leaderboard-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 6px; }
+.leaderboard-list { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.06) transparent; }
+*/
+
+.leader-name {
+    display: grid;
+    grid-template-columns: 200px 40px;
+    grid-template-rows: auto auto;
+    gap: 6px 8px;
+    align-items: start;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 24px;
+    background: transparent;
+}
+
+/* opcional: limitar ancho del meta para evitar overflow */
+.player-meta {
+    max-width: 220px;
+    overflow: hidden;
+}
+
+/* Replace/override to force truncation and prevent name/score from wrapping */
+.player-meta {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;       /* Allow the grid column to shrink and enable ellipsis */
+    overflow: hidden;   /* Hide overflow content */
+}
+
+.player-title-container,
+.player-score-container {
+    width: 100%;
+    min-height: 28px; /* asegura altura aunque esté vacío */
+    display: flex;
+    align-items: center;
+}
+
+.player-title {
+    font-size: 22px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    line-height: 1;
+}
+
+.player-score {
+    font-size: 24px;
+    padding-top: 5px;
+    color: #e6e6e6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.player-right {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    display: grid;
+    grid-template-rows: auto auto;
+    align-items: start;
+    justify-items: end;
+    gap: 6px 0;
+    min-width: 0;
+}
+
+.player-pos-container,
+.player-combo-container {
+    width: 100%;
+    min-height: 28px; /* asegura altura aunque esté vacío */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.player-pos {
+    font-weight: 800;
+    color: #ffd96b;
+    text-align: right;
+    font-size: 22px;
+    width: 100%;
+}
+
+.player-combo {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: right;
+    width: 100%;
+}
+
+/* cuando clones la plantilla la clase .template se elimina; mantener template oculta */
+#leader-template.template { display: none; }
+
+.leader-name.current {
+    background: linear-gradient(90deg, rgba(255,215,0,0.06), rgba(255,215,0,0.02));
+    border: 1px solid rgba(255,215,0,0.09);
+    box-shadow: 0 6px 18px rgba(255,215,0,0.03);
+}
+
+.leader-name:hover {
+    background: rgba(255,255,255,0.03);
+    transform: translateY(-2px);
+}
+
+.leaderboard-footer { padding: 8px 10px; border-top: 1px solid rgba(255,255,255,0.03); color: rgba(255,255,255,0.6); font-size: 13px; }
