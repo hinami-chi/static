@@ -860,7 +860,6 @@ function updateMissDisplay(missValue) {
     }
 }
 
-// --- reemplazo: usar plantilla en HTML para generar filas ---
 (function () {
     const listContainer = document.getElementById('leaderboard-players');
     const template = document.getElementById('leader-template');
@@ -914,6 +913,14 @@ function updateMissDisplay(missValue) {
                 const lb = parsed?.gameplay?.leaderboard;
                 const slots = Array.isArray(lb?.slots) ? lb.slots.slice() : [];
                 const our = lb?.ourplayer ?? null;
+                const isVisible = lb?.isVisible === true;
+                const hasLeaderboard = lb?.hasLeaderboard === true;
+
+                // Si isVisible es true o hasLeaderboard es false, NO mostrar el leaderboard
+                if (isVisible || !hasLeaderboard) {
+                    listContainer.innerHTML = '';
+                    return;
+                }
 
                 if (slots.length) {
                     renderSlotListUsingTemplate(slots, our);
