@@ -359,7 +359,6 @@ body, html {
     border-radius: 10px;
     color: #fff;
     font-size: 18px;
-    backdrop-filter: blur(6px);
     overflow: hidden;
     z-index: 1;
 }
