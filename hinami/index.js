@@ -910,26 +910,35 @@ function updateMissDisplay(missValue) {
         socket.addEventListener('message', ev => {
             try {
                 const parsed = JSON.parse(ev.data);
+                const leaderboardDiv = document.getElementById('leaderboard');
                 const lb = parsed?.gameplay?.leaderboard;
                 const slots = Array.isArray(lb?.slots) ? lb.slots.slice() : [];
                 const our = lb?.ourplayer ?? null;
                 const isVisible = lb?.isVisible === true;
                 const hasLeaderboard = lb?.hasLeaderboard === true;
 
-                // Si isVisible es true o hasLeaderboard es false, NO mostrar el leaderboard
-                if (isVisible || !hasLeaderboard) {
-                    listContainer.innerHTML = '';
-                    return;
+                // Aplica la animación de fadein/fadeout
+                if (leaderboardDiv) {
+                    if (isVisible || !hasLeaderboard) {
+                        leaderboardDiv.classList.remove('fadein');
+                        leaderboardDiv.classList.add('fadeout');
+                    } else {
+                        leaderboardDiv.classList.remove('fadeout');
+                        leaderboardDiv.classList.add('fadein');
+                    }
                 }
 
-                if (slots.length) {
-                    renderSlotListUsingTemplate(slots, our);
-                    setTimeout(() => {
-                        const cur = document.querySelector('#leaderboard-players .leader-name.current');
-                        if (cur) cur.scrollIntoView({behavior:'smooth', block:'center'});
-                    }, 80);
-                } else if (parsed?.gameplay?.name) {
-                    renderSlotListUsingTemplate([{ position: parsed.gameplay.position || '', name: parsed.gameplay.name, score: parsed.gameplay.score || '' }], null);
+                // Renderiza el contenido solo si debe mostrarse
+                if (!isVisible && hasLeaderboard) {
+                    if (slots.length) {
+                        renderSlotListUsingTemplate(slots, our);
+                        setTimeout(() => {
+                            const cur = document.querySelector('#leaderboard-players .leader-name.current');
+                            if (cur) cur.scrollIntoView({behavior:'smooth', block:'center'});
+                        }, 80);
+                    } else if (parsed?.gameplay?.name) {
+                        renderSlotListUsingTemplate([{ position: parsed.gameplay.position || '', name: parsed.gameplay.name, score: parsed.gameplay.score || '' }], null);
+                    }
                 }
             } catch (e) {
                 console.error('leaderboard template render error', e);

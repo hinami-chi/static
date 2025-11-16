@@ -363,6 +363,22 @@ body, html {
     z-index: 1;
 }
 
+.leaderboard {
+    opacity: 1;
+    transition: opacity 0.3s cubic-bezier(.4,0,.2,1);
+    pointer-events: auto;
+}
+
+.leaderboard.fadeout {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.leaderboard.fadein {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .leaderboard-list {
     height: 470px;
     overflow-y: auto;
