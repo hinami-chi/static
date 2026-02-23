@@ -923,11 +923,17 @@ function updateMissDisplay(missValue) {
                 const lb = Array.isArray(parsed?.leaderboard) ? parsed.leaderboard : [];
                 const our = parsed?.play ? { name: parsed.play.playerName, position: 0, score: parsed.play.score, combo: parsed.play.combo?.current, maxCombo: parsed.play.combo?.max } : null;
                 const isVisible = parsed?.settings?.leaderboard?.visible === true;
+                const isPaused = parsed?.game?.paused === true;
+                const isBreak = parsed?.beatmap?.isBreak === true;
                 const hasLeaderboard = lb.length > 0;
+
+                // El leaderboard se oculta si: está configurado como 'visible' (v2 logic), 
+                // si no hay jugadores, si el juego está pausado o si hay un break.
+                const shouldHide = isVisible || !hasLeaderboard || isPaused || isBreak;
 
                 // Aplica la animación de fadein/fadeout
                 if (leaderboardDiv) {
-                    if (isVisible || !hasLeaderboard) {
+                    if (shouldHide) {
                         leaderboardDiv.classList.remove('fadein');
                         leaderboardDiv.classList.add('fadeout');
                     } else {
@@ -937,7 +943,7 @@ function updateMissDisplay(missValue) {
                 }
 
                 // Renderiza el contenido solo si debe mostrarse
-                if (!isVisible && hasLeaderboard) {
+                if (!shouldHide) {
                     renderSlotListUsingTemplate(lb, our);
                     setTimeout(() => {
                         const cur = document.querySelector('#leaderboard-players .leader-name.current');
