@@ -894,7 +894,8 @@ function updateMissDisplay(missValue) {
 
         if (comboEl) comboEl.textContent = comboText;
 
-        if (our && s.name === our.name && s.position === our.position) {
+        const scoreMatch = s.score != null && our && Number(s.score) === Number(our.score);
+        if (our && (s.name === our.name || (s.playerName && s.playerName === our.name)) && (scoreMatch || s.position === our.position)) {
             row.classList.add('current');
         }
 
@@ -907,7 +908,7 @@ function updateMissDisplay(missValue) {
         for (const s of slots) {
             listContainer.appendChild(createRowFromTemplate(s, our));
         }
-        if (our && !slots.some(x => x.name === our.name && x.position === our.position)) {
+        if (our && !slots.some(x => (x.name === our.name || (x.playerName && x.playerName === our.name)))) {
             listContainer.appendChild(createRowFromTemplate(our, our));
         }
     }
