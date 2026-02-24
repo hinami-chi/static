@@ -3,7 +3,8 @@
     src: url("./resources/vertopal.com_Digital-test.ttf");
 }
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     width: 1920px;
@@ -66,49 +67,59 @@ body, html {
     text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
     display: flex;
 }
+
 @keyframes scaleUp {
     0% {
-      transform: scale(1); /* Tamaño normal */
+        transform: scale(1);
+        /* Tamaño normal */
     }
+
     50% {
-      transform: scale(1.1); /* Tamaño aumentado en un 10% */
+        transform: scale(1.1);
+        /* Tamaño aumentado en un 10% */
     }
+
     100% {
-      transform: scale(1); /* Volver al tamaño normal */
+        transform: scale(1);
+        /* Volver al tamaño normal */
     }
-  }
+}
+
 #pp {
     position: absolute;
     bottom: 90px;
     left: 15px;
     font-size: 40px;
     color: white;
-    font-weight:bold;
+    font-weight: bold;
     text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
     display: flex;
 }
-#nowPlaying{
+
+#nowPlaying {
     position: absolute;
     top: 40px;
     left: 15px;
     font-size: 35px;
     color: white;
     max-width: 70%;
-    font-weight:bold;
+    font-weight: bold;
     text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
     display: flex;
 }
+
 #bpm {
     position: absolute;
     bottom: 50px;
     left: 0;
     font-size: 40px;
-    font-weight:bold;
+    font-weight: bold;
     text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
     color: white;
     display: inline-block;
     white-space: nowrap;
 }
+
 #ur {
     position: fixed;
     bottom: 4%;
@@ -116,7 +127,7 @@ body, html {
     justify-content: space-around;
     transform: translate(-50%, 50%);
     font-size: 28px;
-    font-weight:bold;
+    font-weight: bold;
     display: inline-block;
     color: white;
     gap: 5px;
@@ -128,7 +139,7 @@ body, html {
     left: 50%;
     transform: translate(-50%, 50%);
     font-size: 28px;
-    font-weight:bold;
+    font-weight: bold;
     color: white;
 }
 
@@ -138,7 +149,7 @@ body, html {
     left: 35%;
     transform: translate(-50%, 50%);
     font-size: 32px;
-    font-weight:bold;
+    font-weight: bold;
     color: white;
 }
 
@@ -148,7 +159,7 @@ body, html {
     left: 65%;
     transform: translate(-50%, 50%);
     font-size: 32px;
-    font-weight:bold;
+    font-weight: bold;
     color: white;
 }
 
@@ -161,8 +172,10 @@ body, html {
     transition: transform 300ms ease-in-out;
     color: white;
     white-space: nowrap;
-    width: 50%; /* Añade un ancho del 50% */
-    overflow: hidden; /* Oculta el contenido que desborda el 50% */
+    width: 50%;
+    /* Añade un ancho del 50% */
+    overflow: hidden;
+    /* Oculta el contenido que desborda el 50% */
     text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 }
 
@@ -172,7 +185,8 @@ body, html {
 }
 
 .mapdata-text {
-    animation: slide 5s linear infinite; /* Cambia la duración de la animación según tu preferencia */
+    animation: slide 5s linear infinite;
+    /* Cambia la duración de la animación según tu preferencia */
 }
 
 @keyframes slide {
@@ -186,17 +200,20 @@ body, html {
 }
 
 #score img {
-    width: auto; /* Tamaño deseado para las imágenes */
+    width: auto;
+    /* Tamaño deseado para las imágenes */
     height: 64px;
 }
 
 #acc img {
-    width: auto; /* Tamaño deseado para las imágenes */
+    width: auto;
+    /* Tamaño deseado para las imágenes */
     height: 40px;
 }
 
 #combo img {
-    width: auto; /* Tamaño deseado para las imágenes */
+    width: auto;
+    /* Tamaño deseado para las imágenes */
     height: 80px;
 }
 
@@ -217,7 +234,8 @@ body, html {
     line-height: 28px;
     font-size: 25px;
 }
-#timer2{
+
+#timer2 {
     position: absolute;
     bottom: 180px;
     right: 10px;
@@ -227,10 +245,18 @@ body, html {
     display: flex;
     opacity: 0.90;
 }
-#ur, #star, #cs, #ar, #map, #bpm, #pp {
+
+#ur,
+#star,
+#cs,
+#ar,
+#map,
+#bpm,
+#pp {
     letter-spacing: 3px;
 }
-#rank{
+
+#rank {
     position: absolute;
     top: 68px;
     right: 280px;
@@ -239,11 +265,15 @@ body, html {
     text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
     display: flex;
 }
+
 .rank-image {
-    max-width: 45px; /* Ancho deseado */
-    max-height: 45px; /* Alto deseado */
+    max-width: 45px;
+    /* Ancho deseado */
+    max-height: 45px;
+    /* Alto deseado */
 }
-#mods{
+
+#mods {
     position: absolute;
     top: 150px;
     right: 30px;
@@ -253,10 +283,14 @@ body, html {
     display: flex;
     opacity: 0.90;
 }
+
 .mod-image {
-    width: 100px; /* Ancho deseado */
-    height: 100px; /* Altura deseada */
+    width: 100px;
+    /* Ancho deseado */
+    height: 100px;
+    /* Altura deseada */
 }
+
 #main {
     height: 100vh;
     width: 100vw;
@@ -278,12 +312,16 @@ body, html {
     width: auto;
     height: 100%;
     position: absolute;
-    top: 50%; /* Centra verticalmente */
-    left: 50%; /* Centra horizontalmente */
-    transform: translate(-50%, -50%); /* Ajusta para centrar correctamente */
+    top: 50%;
+    /* Centra verticalmente */
+    left: 50%;
+    /* Centra horizontalmente */
+    transform: translate(-50%, -50%);
+    /* Ajusta para centrar correctamente */
     z-index: -1;
     transition: ease;
-    filter: saturate(150%) blur(1px); /* Ajusta los valores según tus necesidades */
+    filter: saturate(150%) blur(1px);
+    /* Ajusta los valores según tus necesidades */
 }
 
 #hits {
@@ -324,19 +362,23 @@ body, html {
 
 /* Colores específicos para cada tipo de hit */
 #hits300 {
-    color: #00ccff; /* Azul brillante para 300s */
+    color: #00ccff;
+    /* Azul brillante para 300s */
 }
 
 #hits100 {
-    color: #66ff66; /* Verde para 100s */
+    color: #66ff66;
+    /* Verde para 100s */
 }
 
 #hits50 {
-    color: #ffaa00; /* Naranja para 50s */
+    color: #ffaa00;
+    /* Naranja para 50s */
 }
 
 #hitsMiss {
-    color: #ff6666; /* Rojo para misses */
+    color: #ff6666;
+    /* Rojo para misses */
 }
 
 /* Efecto de pulso cuando cambian los valores */
@@ -345,28 +387,40 @@ body, html {
 }
 
 @keyframes hitPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Leaderboard (estructura y estilos, mantener diseño fuera del JS) */
 .leaderboard {
     position: absolute;
-    left: 0;               /* quitar margen izquierdo */
     top: 390px;
-    width: 300px;        /* ajustar ancho si es necesario */
+    width: 230px;
     border-radius: 10px;
     color: #fff;
     font-size: 18px;
     overflow: hidden;
     z-index: 1;
+    opacity: 1;
+    transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1);
+    pointer-events: auto;
 }
 
-.leaderboard {
-    opacity: 1;
-    transition: opacity 0.3s cubic-bezier(.4,0,.2,1);
-    pointer-events: auto;
+.leaderboard.blue-side {
+    left: 0;
+}
+
+.leaderboard.red-side {
+    right: 0;
 }
 
 .leaderboard.fadeout {
@@ -379,97 +433,106 @@ body, html {
     pointer-events: auto;
 }
 
+/* Team Headers */
+.team-header {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    padding: 0 10px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.blue-team-title {
+    color: #4488ff;
+}
+
+.red-team-title {
+    color: #ff4444;
+    text-align: right;
+}
+
 .leaderboard-list {
     height: 470px;
     overflow-y: auto;
     padding: 10px 4px;
-    -ms-overflow-style: none;      /* IE/Edge */
-    scrollbar-width: none;         /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
+
+/* ... rest of existing styles ... */
 
 .leaderboard-list::-webkit-scrollbar {
-    display: none;                 /* Chrome, Safari y Opera */
+    display: none;
+    /* Chrome, Safari y Opera */
 }
-
-/* Opcional: en vez de ocultarla totalmente, usar una thumb muy sutil
-.leaderboard-list::-webkit-scrollbar { width: 8px; }
-.leaderboard-list::-webkit-scrollbar-track { background: transparent; }
-.leaderboard-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 6px; }
-.leaderboard-list { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.06) transparent; }
-*/
 
 .leader-name {
     display: grid;
-    grid-template-columns: 200px 40px;
+    grid-template-columns: 0px 120px 54px;
     grid-template-rows: auto auto;
-    gap: 6px 8px;
-    align-items: start;
-    padding: 12px;
+    gap: 0px 4px;
+    align-items: center;
+    padding: 8px 4px;
     border-radius: 8px;
-    margin-bottom: 8px;
-    font-size: 24px;
+    margin-bottom: 6px;
+    font-size: 20px;
     background: transparent;
 }
 
-/* opcional: limitar ancho del meta para evitar overflow */
 .player-meta {
-    max-width: 220px;
-    overflow: hidden;
-}
-
-/* Replace/override to force truncation and prevent name/score from wrapping */
-.player-meta {
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 1 / 3;
     display: flex;
     flex-direction: column;
-    min-width: 0;       /* Allow the grid column to shrink and enable ellipsis */
-    overflow: hidden;   /* Hide overflow content */
+    min-width: 0;
+    max-width: 158px;
+    overflow: hidden;
 }
 
 .player-title-container,
 .player-score-container {
     width: 100%;
-    min-height: 28px; /* asegura altura aunque esté vacío */
+    height: 26px;
     display: flex;
     align-items: center;
 }
 
 .player-title {
-    font-size: 22px;
+    font-size: 19px;
     font-weight: 800;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
-    line-height: 1;
+    line-height: 26px;
 }
 
 .player-score {
-    font-size: 24px;
-    padding-top: 5px;
+    font-size: 20px;
     color: #e6e6e6;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+    line-height: 26px;
 }
 
 .player-right {
-    grid-column: 2;
+    grid-column: 3;
     grid-row: 1 / 3;
-    display: grid;
-    grid-template-rows: auto auto;
-    align-items: start;
-    justify-items: end;
-    gap: 6px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
     min-width: 0;
 }
 
 .player-pos-container,
 .player-combo-container {
     width: 100%;
-    min-height: 28px; /* asegura altura aunque esté vacío */
+    height: 26px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -479,29 +542,99 @@ body, html {
     font-weight: 800;
     color: #ffd96b;
     text-align: right;
-    font-size: 22px;
+    font-size: 18px;
     width: 100%;
+    line-height: 26px;
 }
 
 .player-combo {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     text-align: right;
     width: 100%;
+    line-height: 26px;
 }
 
 /* cuando clones la plantilla la clase .template se elimina; mantener template oculta */
-#leader-template.template { display: none; }
+#leader-template.template {
+    display: none;
+}
 
 .leader-name.current {
-    background: linear-gradient(90deg, rgba(255,215,0,0.06), rgba(255,215,0,0.02));
-    border: 1px solid rgba(255,215,0,0.09);
-    box-shadow: 0 6px 18px rgba(255,215,0,0.03);
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.06), rgba(255, 215, 0, 0.02));
+    border: 1px solid rgba(255, 215, 0, 0.09);
+    box-shadow: 0 6px 18px rgba(255, 215, 0, 0.03);
 }
 
 .leader-name:hover {
-    background: rgba(255,255,255,0.03);
+    background: rgba(255, 255, 255, 0.03);
     transform: translateY(-2px);
 }
 
-.leaderboard-footer { padding: 8px 10px; border-top: 1px solid rgba(255,255,255,0.03); color: rgba(255,255,255,0.6); font-size: 13px; }
+.leaderboard-footer {
+    padding: 8px 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+}
+
+/* Mirroring for Red Side */
+.red-side .leader-name {
+    grid-template-columns: 54px 158px 10px;
+    text-align: right;
+}
+
+.red-side .player-right {
+    grid-column: 1;
+    align-items: flex-start;
+}
+
+.red-side .player-meta {
+    grid-column: 2;
+}
+
+.red-side .team-indicator {
+    grid-column: 3;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.red-side .player-title-container,
+.red-side .player-score-container {
+    justify-content: flex-end;
+}
+
+.red-side .player-pos-container,
+.red-side .player-combo-container {
+    justify-content: flex-start;
+}
+
+.red-side .player-pos,
+.red-side .player-combo {
+    text-align: left;
+    width: 100%;
+}
+
+.red-side .player-title-container {
+    flex-direction: row-reverse;
+}
+
+.team-indicator {
+    grid-column: 1;
+    width: 6px;
+    height: 18px;
+    margin-right: 0px;
+    border-radius: 2px;
+    background-color: transparent;
+    flex-shrink: 0;
+}
+
+.team-indicator.team-blue {
+    background-color: #4488ff;
+    box-shadow: 0 0 8px #4488ff;
+}
+
+.team-indicator.team-red {
+    background-color: #ff4444;
+    box-shadow: 0 0 8px #ff4444;
+}

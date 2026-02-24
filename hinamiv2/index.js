@@ -864,11 +864,10 @@ function updateMissDisplay(missValue) {
 }
 
 (function () {
-    const listContainer = document.getElementById('leaderboard-players');
     const template = document.getElementById('leader-template');
 
-    if (!listContainer || !template) {
-        console.warn('Leaderboard template o contenedor no encontrados.');
+    if (!template) {
+        console.warn('Leaderboard template no encontrado.');
         return;
     }
 
@@ -883,7 +882,7 @@ function updateMissDisplay(missValue) {
         const scoreEl = row.querySelector('.player-score');
         const comboEl = row.querySelector('.player-combo');
 
-        if (posEl) posEl.textContent = s.position != null ? `#${s.position}` : '';
+        if (posEl) posEl.textContent = s.position != null && s.position !== 0 ? `#${s.position}` : '';
         if (nameEl) nameEl.textContent = s.name || s.playerName || '';
         if (scoreEl) scoreEl.textContent = (s.score != null) ? Number(s.score).toLocaleString() : '';
 
@@ -899,17 +898,21 @@ function updateMissDisplay(missValue) {
             row.classList.add('current');
         }
 
+        const teamEl = row.querySelector('.team-indicator');
+        if (teamEl) {
+            if (s.team === 1) teamEl.classList.add('team-blue');
+            else if (s.team === 2) teamEl.classList.add('team-red');
+        }
+
         return row;
     }
 
-    function renderSlotListUsingTemplate(slots, our) {
+    function renderSlotListUsingTemplate(slots, our, listContainer) {
+        if (!listContainer) return;
         listContainer.innerHTML = '';
         slots.sort((a, b) => (a.position || 0) - (b.position || 0));
         for (const s of slots) {
             listContainer.appendChild(createRowFromTemplate(s, our));
-        }
-        if (our && !slots.some(x => (x.name === our.name || (x.playerName && x.playerName === our.name)))) {
-            listContainer.appendChild(createRowFromTemplate(our, our));
         }
     }
 
@@ -919,7 +922,9 @@ function updateMissDisplay(missValue) {
         socket.addEventListener('message', ev => {
             try {
                 const parsed = JSON.parse(ev.data);
-                const leaderboardDiv = document.getElementById('leaderboard');
+                const lbBlueDiv = document.getElementById('leaderboard-blue');
+                const lbRedDiv = document.getElementById('leaderboard-red');
+
                 // En v2 leaderboard es un array plano; ourplayer viene de play
                 const lb = Array.isArray(parsed?.leaderboard) ? parsed.leaderboard : [];
                 const our = parsed?.play ? { name: parsed.play.playerName, position: 0, score: parsed.play.score, combo: parsed.play.combo?.current, maxCombo: parsed.play.combo?.max } : null;
@@ -932,23 +937,44 @@ function updateMissDisplay(missValue) {
                 // si no hay jugadores, si el juego está pausado o si hay un break.
                 const shouldHide = isVisible || !hasLeaderboard || isPaused || isBreak;
 
-                // Aplica la animación de fadein/fadeout
-                if (leaderboardDiv) {
-                    if (shouldHide) {
-                        leaderboardDiv.classList.remove('fadein');
-                        leaderboardDiv.classList.add('fadeout');
-                    } else {
-                        leaderboardDiv.classList.remove('fadeout');
-                        leaderboardDiv.classList.add('fadein');
+                // Aplica la animación de fadein/fadeout a ambos contenedores
+                [lbBlueDiv, lbRedDiv].forEach(div => {
+                    if (div) {
+                        if (shouldHide) {
+                            div.classList.remove('fadein');
+                            div.classList.add('fadeout');
+                        } else {
+                            div.classList.remove('fadeout');
+                            div.classList.add('fadein');
+                        }
                     }
-                }
+                });
 
                 // Renderiza el contenido solo si debe mostrarse
                 if (!shouldHide) {
-                    renderSlotListUsingTemplate(lb, our);
+                    const lbBlue = lb.filter(p => p.team === 1 || p.team === 0);
+                    const lbRed = lb.filter(p => p.team === 2);
+
+                    const containerBlue = document.getElementById('leaderboard-players-blue');
+                    const containerRed = document.getElementById('leaderboard-players-red');
+
+                    renderSlotListUsingTemplate(lbBlue, our, containerBlue);
+                    renderSlotListUsingTemplate(lbRed, our, containerRed);
+
+                    // Logic for adding 'our' manually if missing in BOTH (fallback)
+                    const isOurInBlue = lbBlue.some(x => (x.name === our?.name || (x.playerName && x.playerName === our?.name)));
+                    const isOurInRed = lbRed.some(x => (x.name === our?.name || (x.playerName && x.playerName === our?.name)));
+
+                    if (our && !isOurInBlue && !isOurInRed) {
+                        // Default to blue if not found
+                        if (containerBlue) containerBlue.appendChild(createRowFromTemplate(our, our));
+                    }
+
                     setTimeout(() => {
-                        const cur = document.querySelector('#leaderboard-players .leader-name.current');
-                        if (cur) cur.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        ['leaderboard-players-blue', 'leaderboard-players-red'].forEach(id => {
+                            const cur = document.querySelector(`#${id} .leader-name.current`);
+                            if (cur) cur.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        });
                     }, 80);
                 }
             } catch (e) {
