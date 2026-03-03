@@ -305,8 +305,8 @@ socket.onmessage = event => {
             }
         }
         if (data.beatmap && data.beatmap.stats && data.beatmap.stats.bpm) {
-            let bpmmin = data.beatmap.stats.bpm.min;
-            let bpmmax = data.beatmap.stats.bpm.max;
+            let bpmmin = Math.round(data.beatmap.stats.bpm.min);
+            let bpmmax = Math.round(data.beatmap.stats.bpm.max);
 
             if (bpmmin === bpmmax) {
                 bpmContainer.textContent = `${bpmmin} BPM`;
